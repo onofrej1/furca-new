@@ -150,6 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Onofrej\ApiGenerator\ApiGeneratorServiceProvider::class,
 
         /*
          * Application Service Providers...

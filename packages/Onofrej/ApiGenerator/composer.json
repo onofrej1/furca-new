@@ -1,0 +1,41 @@
+{
+    "name": "onofrej/apigenerator",
+    "description": ":description",
+    "license": "license",
+    "authors": [
+        {
+            "name": "author name",
+            "email": "author email",
+            "homepage": "author homepage"
+        }
+    ],
+    "homepage": "https://github.com/onofrej/apigenerator",
+    "keywords": ["Laravel", "ApiGenerator"],
+    "require": {
+        "illuminate/support": "~5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Onofrej\\ApiGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Onofrej\\ApiGenerator\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Onofrej\\ApiGenerator\\ApiGeneratorServiceProvider"
+            ],
+            "aliases": {
+                "ApiGenerator": "Onofrej\\ApiGenerator\\Facades\\ApiGenerator"
+            }
+        }
+    }
+}

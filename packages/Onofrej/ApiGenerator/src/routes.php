@@ -1,0 +1,27 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/test', 'Onofrej\ApiGenerator\Http\Controllers\AppController@test');
+//Route::get('/flush', 'SiteController@flush');
+
+Route::resources([
+    'article' => 'Rest\ArticleController',
+    'page' => 'Rest\PageController',
+    'menu' => 'Rest\MenuController',
+    'menuItem' => 'Rest\MenuItemController',
+    'tag' => 'Rest\TagController',
+]);
