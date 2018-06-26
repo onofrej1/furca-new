@@ -92,7 +92,7 @@ class AppService
   }
 
   public function parseTemplate( $names, $args ){
-    $templateDir = base_path('resources/templates');
+    $templateDir = './../templates';
     if ( !is_array( $names ) ) {
       $names = array( $names );
     }

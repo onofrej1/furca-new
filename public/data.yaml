@@ -1,0 +1,21 @@
+news:
+    model: App\Models\News
+    table: news
+    dbFields:
+        name:
+            type: string
+        title:
+            type: text
+        total:
+            type: integer
+
+tag:
+    model: App\Models\Tag
+    table: tag
+    dbFields:
+        id:
+            type: integer
+        title:
+            type: string
+        name:
+            type: string

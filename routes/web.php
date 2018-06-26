@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resources([
+    'article' => 'Rest\ArticleController',
+    'page' => 'Rest\PageController',
+    'menu' => 'Rest\MenuController',
+    'menuItem' => 'Rest\MenuItemController',
+    'tag' => 'Rest\TagController',
+]);

@@ -17,11 +17,3 @@ Route::get('/', function () {
 
 Route::get('/test', 'Onofrej\ApiGenerator\Http\Controllers\AppController@test');
 //Route::get('/flush', 'SiteController@flush');
-
-Route::resources([
-    'article' => 'Rest\ArticleController',
-    'page' => 'Rest\PageController',
-    'menu' => 'Rest\MenuController',
-    'menuItem' => 'Rest\MenuItemController',
-    'tag' => 'Rest\TagController',
-]);
