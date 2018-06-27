@@ -44,20 +44,26 @@ class AppService
 
       foreach($data['dbFields'] as $field => $prop) {
         Schema::table($tableName, function ($table) use($tableName, $field, $prop) {
-            $existingType = $this->getColumn($tableName, $field);
-            $type = $prop['type'] ?? $prop;
-
-            $nullable = $prop['nullable'] ?? false;
-            $isNullable = !$existingType->getNotNull();
+            $setType = $prop['type'] ?? $prop;
+            $setNullable = $prop['nullable'] ?? false;
+            $setLength = $prop['length'] ?? null;
 
             if (!Schema::hasColumn($tableName, $field)) {
-              $table->$type($field);
+              $dbCol = $table->$setType($field, $setLength)->nullable($setNullable);
+              return;
             }
-            if($existingType->getType()->getName() !== $type) {
-              $table->$type($field)->change();
+
+            $col = $this->getColumn($tableName, $field);
+
+            $type = $col->getType()->getName();
+            $nullable = !$col->getNotNull();
+            $length = $col->getLength();
+
+            if($type !== $setType || $length != $setLength) {
+              $table->$setType($field, $setLength)->change();
             }
-            if($isNullable != $nullable) {
-              $table->$type($field)->nullable($nullable)->change();
+            if($nullable != $setNullable) {
+              $table->$setType($field)->nullable($setNullable)->change();
             }
         });
       }
@@ -108,31 +114,15 @@ class AppService
     fclose($file);
   }
 
-  public function parseTemplate( $names, $args ){
+  public function parseTemplate( $name, $args)
+  {
     $templateDir = base_path('resources/templates');
-    if ( !is_array( $names ) ) {
-      $names = array( $names );
-    }
-
-    $template_found = false;
-    foreach ( $names as $name ) {
-      $file = $templateDir.'/' . $name;
-      if ( file_exists( $file ) ) {
-        $template_found = $file;
-        break;
-      }
-    }
-
-    if ( ! $template_found ) {
-      return '';
-    }
-
-    if ( is_array( $args ) ){
-      extract( $args );
-    }
-
+    $template = $templateDir.'/' . $name;
+    extract( $args );
+    
     ob_start();
-    include $template_found;
+    include $template;
+
     return ob_get_clean();
   }
 

@@ -3,10 +3,16 @@ Page:
     table: page
     dbFields:
         title:
-            type: text
-        author:
             type: string
-            nullable: false
-        novy:
+            nullable: true
+        author:
             type: text
             nullable: true
+        novy:
+            type: text
+            nullable: false
+        posledny:
+            type: integer
+        dalsi:
+            type: string
+            length: 58
