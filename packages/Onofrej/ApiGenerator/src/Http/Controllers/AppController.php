@@ -21,7 +21,7 @@ class AppController extends Controller
   public function test()
   {
     $source = public_path('data.yaml');
-    //$this->appService->createTables($source);
+    $this->appService->createTables($source);
     dump('test');
   }
 

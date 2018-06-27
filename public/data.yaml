@@ -1,0 +1,12 @@
+Page:
+    model: App\Models\Page
+    table: page
+    dbFields:
+        title:
+            type: text
+        author:
+            type: string
+            nullable: false
+        novy:
+            type: text
+            nullable: true
