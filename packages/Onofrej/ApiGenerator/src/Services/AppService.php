@@ -80,7 +80,7 @@ class AppService
     $modelName = substr(strrchr($modelClass, '\\'), 1);
     $controllerName = $modelName.'Controller';
 
-    $dir = base_path('app/Http/Controllers/Rest');
+    $dir = base_path('app/Http/Controllers');
     $output = $dir.'/'.$controllerName.'.php';
 
     $this->createFromTemplate('RestController.tpl', [
@@ -95,7 +95,7 @@ class AppService
     list($namespace, $className) = str_split($class, strrpos($class, '\\') + 1);
     $namespace = rtrim($namespace, '\\');
 
-    $dir = base_path('app/Models');
+    $dir = base_path('app');
     $output = $dir.'/'.$className.'.php';
 
     $this->createFromTemplate('Model.tpl', [
@@ -116,10 +116,11 @@ class AppService
 
   public function parseTemplate( $name, $args)
   {
-    $templateDir = base_path('resources/templates');
+    $templateDir = realpath(__DIR__.'/../templates');
+    dump($templateDir);
     $template = $templateDir.'/' . $name;
     extract( $args );
-    
+
     ob_start();
     include $template;
 

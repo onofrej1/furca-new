@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 Route::resources([
-    'article' => 'Rest\ArticleController',
-    'page' => 'Rest\PageController',
-    'menu' => 'Rest\MenuController',
-    'menuItem' => 'Rest\MenuItemController',
-    'tag' => 'Rest\TagController',
+    'article' => 'ArticleController',
+    'page' => 'PageController',
+    'menu' => 'MenuController',
+    'menuItem' => 'MenuItemController',
+    'tag' => 'TagController',
 ]);
