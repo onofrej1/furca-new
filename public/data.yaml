@@ -1,21 +1,18 @@
-news:
-    model: App\Models\News
-    table: news
+Page:
+    model: App\Models\Page
+    table: page
     dbFields:
-        name:
-            type: string
         title:
+            type: string
+            nullable: true
+        author:
             type: text
-        total:
+            nullable: true
+        novy:
+            type: text
+            nullable: false
+        posledny:
             type: integer
-
-tag:
-    model: App\Models\Tag
-    table: tag
-    dbFields:
-        id:
-            type: integer
-        title:
+        dalsi:
             type: string
-        name:
-            type: string
+            length: 58
