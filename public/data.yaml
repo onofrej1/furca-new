@@ -1,5 +1,5 @@
 Page:
-    model: App\Models\Page
+    model: App\Page
     table: page
     dbFields:
         title:
