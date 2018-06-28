@@ -4,6 +4,7 @@ Page:
     dbFields:
         title:
             type: string
+            length: 26
             nullable: true
         author:
             type: text

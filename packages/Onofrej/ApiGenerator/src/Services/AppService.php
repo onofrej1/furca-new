@@ -48,9 +48,7 @@ class AppService
             $setType = $prop['type'] ?? $prop;
             $setNullable = $prop['nullable'] ?? false;
             $setLength = $prop['length'] ?? null;
-
-            $tab = "\t\t\t\t\t\t";
-            $migrateColumns .= "\$table->{$setType}('{$field}');\n{$tab}";
+            $migrateColumns .= $this->createMigrationRow($field, $setType, $setLength, $setNullable);
             if (!Schema::hasColumn($tableName, $field)) {
 
               $dbCol = $table->$setType($field, $setLength)->nullable($setNullable);
@@ -74,6 +72,13 @@ class AppService
 
       $this->createMigration($tableName, $migrateColumns);
     }
+  }
+
+  private function createMigrationRow($field, $type, $length, $nullable)
+  {
+    $tab = "\t\t\t\t\t\t";
+    $field = $length ? "'{$field}', {$length}" : "'{$field}'";
+    return "\$table->{$type}({$field});\n{$tab}";
   }
 
   public function getColumn($table, $column)
@@ -111,16 +116,6 @@ class AppService
     ], $output);
   }
 
-  private function createMigration($table, $columns)
-  {
-      $output = base_path('database/migrations/abc.php');
-
-      $this->createFromTemplate('Migration.tpl', [
-        'columns' => $columns,
-        'table' => $table
-      ], $output);
-  }
-
   private function createFromTemplate($template, $args, $output)
   {
     $template = $this->parseTemplate($template, $args);
@@ -140,6 +135,17 @@ class AppService
     include $template;
 
     return ob_get_clean();
+  }
+
+  private function createMigration($table, $columns)
+  {
+      $dir = base_path('database/migrations');
+      $output = $dir.'/create_'.$table.'_table.php';
+
+      $this->createFromTemplate('Migration.tpl', [
+        'columns' => $columns,
+        'table' => $table
+      ], $output);
   }
 
   /*public function getAllTables($connection = null)

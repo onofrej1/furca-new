@@ -1,4 +1,5 @@
 <?php
+$tableName = ucfirst($table);
 $file = <<<EOT
 
 <?php
@@ -7,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Create{$table}Table extends Migration
+class Create{$tableName}Table extends Migration
 {
     /**
      * Run the migrations.
