@@ -42,13 +42,17 @@ class AppService
         });
       }
 
+      $migrateColumns = '';
       foreach($data['dbFields'] as $field => $prop) {
-        Schema::table($tableName, function ($table) use($tableName, $field, $prop) {
+        Schema::table($tableName, function ($table) use($tableName, $field, $prop, &$migrateColumns) {
             $setType = $prop['type'] ?? $prop;
             $setNullable = $prop['nullable'] ?? false;
             $setLength = $prop['length'] ?? null;
 
+            $tab = "\t\t\t\t\t\t";
+            $migrateColumns .= "\$table->{$setType}('{$field}');\n{$tab}";
             if (!Schema::hasColumn($tableName, $field)) {
+
               $dbCol = $table->$setType($field, $setLength)->nullable($setNullable);
               return;
             }
@@ -67,6 +71,8 @@ class AppService
             }
         });
       }
+
+      $this->createMigration($tableName, $migrateColumns);
     }
   }
 
@@ -105,6 +111,16 @@ class AppService
     ], $output);
   }
 
+  private function createMigration($table, $columns)
+  {
+      $output = base_path('database/migrations/abc.php');
+
+      $this->createFromTemplate('Migration.tpl', [
+        'columns' => $columns,
+        'table' => $table
+      ], $output);
+  }
+
   private function createFromTemplate($template, $args, $output)
   {
     $template = $this->parseTemplate($template, $args);
@@ -117,7 +133,6 @@ class AppService
   public function parseTemplate( $name, $args)
   {
     $templateDir = realpath(__DIR__.'/../templates');
-    dump($templateDir);
     $template = $templateDir.'/' . $name;
     extract( $args );
 
@@ -127,7 +142,7 @@ class AppService
     return ob_get_clean();
   }
 
-  public function getAllTables($connection = null)
+  /*public function getAllTables($connection = null)
   {
     return collect(\DB::connection($connection)->select('show tables'))->map(function ($val) {
       foreach ($val as $key => $tbl) {
@@ -139,6 +154,6 @@ class AppService
   protected function camelize($input, $separator = '_')
   {
     return str_replace($separator, '', ucwords($input, $separator));
-  }
+  }*/
 
 }

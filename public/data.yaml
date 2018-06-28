@@ -11,8 +11,3 @@ Page:
         novy:
             type: text
             nullable: false
-        posledny:
-            type: integer
-        dalsi:
-            type: string
-            length: 58
