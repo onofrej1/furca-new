@@ -27,11 +27,11 @@ class AppService
       $tableName = $data['table'];
 
       $columns = Schema::getColumnListing($tableName);
-      $dropColumns = array_diff($columns, array_keys($data['dbFields']),['id']);
+      $dropColumns = array_diff($columns, array_keys($data['columns']),['id']);
 
       Schema::table($tableName, function ($table) use($dropColumns) {
         foreach($dropColumns as $column) {
-          $table->dropColumn($column);
+          //$table->dropColumn($column);
         }
       });
 
@@ -42,15 +42,15 @@ class AppService
         });
       }
 
-      $migrateColumns = '';
-      foreach($data['dbFields'] as $field => $prop) {
+      //$migrateColumns = [];
+      foreach($data['columns'] as $field => $prop) {
         Schema::table($tableName, function ($table) use($tableName, $field, $prop, &$migrateColumns) {
             $setType = $prop['type'] ?? $prop;
             $setNullable = $prop['nullable'] ?? false;
             $setLength = $prop['length'] ?? null;
-            $migrateColumns .= $this->createMigrationRow($field, $setType, $setLength, $setNullable);
-            if (!Schema::hasColumn($tableName, $field)) {
 
+            if (!Schema::hasColumn($tableName, $field)) {
+              //$migrateColumns[] = $this->addColumn($field, $setType, $setLength, $setNullable);
               $dbCol = $table->$setType($field, $setLength)->nullable($setNullable);
               return;
             }
@@ -70,15 +70,14 @@ class AppService
         });
       }
 
-      $this->createMigration($tableName, $migrateColumns);
+      //$this->createMigration($tableName, $migrateColumns);
     }
   }
 
-  private function createMigrationRow($field, $type, $length, $nullable)
+  private function addColumn($field, $type, $length, $nullable)
   {
-    $tab = "\t\t\t\t\t\t";
     $field = $length ? "'{$field}', {$length}" : "'{$field}'";
-    return "\$table->{$type}({$field});\n{$tab}";
+    return "\$table->{$type}({$field});\n";
   }
 
   public function getColumn($table, $column)
@@ -94,7 +93,7 @@ class AppService
     $dir = base_path('app/Http/Controllers');
     $output = $dir.'/'.$controllerName.'.php';
 
-    $this->createFromTemplate('RestController.tpl', [
+    $this->createFromTemplate('ResourceController.tpl', [
       'class' => $controllerName,
       'namespace' => 'App\\Http\\Controllers',
       'model' => $modelClass
@@ -103,15 +102,15 @@ class AppService
 
   public function createModel($class, $table)
   {
-    list($namespace, $className) = str_split($class, strrpos($class, '\\') + 1);
-    $namespace = rtrim($namespace, '\\');
+    $arr = array();
+    preg_match("/(^.*)\\\(.*?)$/", $class, $arr);
 
     $dir = base_path('app');
-    $output = $dir.'/'.$className.'.php';
+    $output = $dir.'/'.$arr[2].'.php';
 
     $this->createFromTemplate('Model.tpl', [
-      'class' => $className,
-      'namespace' => $namespace,
+      'class' => $arr[2],
+      'namespace' => $arr[1],
       'table' => $table
     ], $output);
   }

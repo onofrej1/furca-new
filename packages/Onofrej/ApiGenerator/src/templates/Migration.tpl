@@ -18,8 +18,16 @@ class Create{$tableName}Table extends Migration
     public function up()
     {
         Schema::create('{$table}', function (Blueprint \$table) {
-            \$table->increments('id');
-            $columns
+            \$table->increments('id');\n
+EOT;
+
+foreach($columns as $column) {
+$file.= <<<EOT
+            $column
+EOT;
+}
+
+$file .= <<<EOT
         });
     }
 

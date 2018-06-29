@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Runner extends Model
 {
-  protected $table = 'user';
+  protected $table = 'runner';
   public $timestamps = false;
 }

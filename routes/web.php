@@ -21,4 +21,10 @@ Route::resources([
     'menu' => 'MenuController',
     'menuItem' => 'MenuItemController',
     'tag' => 'TagController',
+    'user' => 'UserController',
+    'role' => 'RoleController',
+    'event' => 'EventController',
+    'run' => 'RunController',
+    'result' => 'ResultController',
+    'hamburg' => 'HamburgController'
 ]);

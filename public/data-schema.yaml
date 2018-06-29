@@ -1,0 +1,113 @@
+Page:
+    model: App\Page
+    table: page
+    columns:
+        title: string
+        body: text
+
+Hamburg:
+    model: App\Hamburg
+    table: hamburg
+    columns:
+        title: string
+        event_date: date
+        notes: text
+
+Menu:
+    model: App\Menu
+    table: menu
+    columns:
+        title: string
+        type: string
+
+MenuItem:
+    model: App\MenuItem
+    table: menu_item
+    columns:
+        title: string
+        menu_id: integer
+        page_id:
+            type: integer
+            nullable: true
+        parent_id:
+            type: integer
+            nullable: true
+        link:
+            type: string
+            nullable: true
+
+Article:
+    model: App\Article
+    table: article
+    columns:
+        title: string
+        author: string
+        source:
+            type: string
+            nullable: true
+        content:
+            type: text
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime
+            nullable: true
+
+Runner:
+    model: App\Runner
+    table: runner
+    columns:
+        first_name: string
+        last_name: string
+        born: string
+
+Run:
+    model: App\Run
+    table: run
+    columns:
+        run: string
+        locality: string
+
+Result:
+    model: App\Result
+    table: result
+    columns:
+        event_id: integer
+        runner_id: biginteger
+        place: integer
+        finish_time: time
+        category: string
+        team: string
+        start_number:
+            type: string
+            nullable: true
+
+Event:
+    model: App\Event
+    table: event
+    columns:
+        title: string
+        event_date: date
+        edition: integer
+        run_id: integer
+
+User:
+    model: App\User
+    table: user
+    columns:
+        email: string
+        password: string
+        name: string
+
+Role:
+    model: App\Role
+    table: role
+    columns:
+        title: string
+
+Tag:
+    model: App\Tag
+    table: tag
+    columns:
+        title: string
