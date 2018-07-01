@@ -4,6 +4,7 @@ namespace Onofrej\ApiGenerator\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Schema;
 
 class ResourceController extends Controller
 {
@@ -13,25 +14,12 @@ class ResourceController extends Controller
         //$this->middleware('auth');
     }
 
-    public function getFields($resource)
+    public function getFields()
     {
-        $resource = $this->getResourceName($resource);
-        $fields = \Schema::getColumnListing((new $resource())->getTable());
+        $model = new $this->model();
+        $fields = Schema::getColumnListing($model->getTable());
 
         return $fields;
-    }
-
-    private function getResourceName($resource)
-    {
-        $resources = [
-            'tag' => 'App\Tag',
-            'article' => 'App\Article',
-            'page' => 'App\Page',
-      	    'menuItem' => 'App\MenuItem',
-      	    'hamburg' => 'App\Hamburg'
-        ];
-
-        return $resources[$resource];
     }
 
     public function index()
@@ -65,7 +53,8 @@ class ResourceController extends Controller
     public function store(Request $request)
     {
         $model = new $this->model();
-        $model->fill($request->all());
+        $this->fillModel($model, $request);
+
         $model->save();
 
         return response()->json($model);
@@ -74,11 +63,22 @@ class ResourceController extends Controller
     public function update(Request $request, $id)
     {
       $model = $this->model::find($id);
+      $this->fillModel($model, $request);
 
-      $model->fill($request->all());
       $model->save();
 
       return response()->json($model);
+    }
+
+    private function fillModel($model, $request)
+    {
+      $fields = $this->getFields();
+
+      foreach ($fields as $field) {
+        if(in_array($field, $fields) && array_key_exists($field, $request->all())) {
+           $model->$field = $request->$field;
+        }
+      }
     }
 
     public function destroy($id)

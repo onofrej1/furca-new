@@ -15,16 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resources([
-    'article' => 'ArticleController',
-    'page' => 'PageController',
-    'menu' => 'MenuController',
-    'menuItem' => 'MenuItemController',
-    'tag' => 'TagController',
-    'user' => 'UserController',
-    'role' => 'RoleController',
-    'event' => 'EventController',
-    'run' => 'RunController',
-    'result' => 'ResultController',
-    'hamburg' => 'HamburgController'
-]);
+Route::group(['middleware' => 'cors'], function() {
+  Route::resources([
+      'article' => 'ArticleController',
+      'page' => 'PageController',
+      'menu' => 'MenuController',
+      'menuItem' => 'MenuItemController',
+      'tag' => 'TagController',
+      'user' => 'UserController',
+      'role' => 'RoleController',
+      'event' => 'EventController',
+      'run' => 'RunController',
+      'result' => 'ResultController',
+      'hamburg' => 'HamburgController'
+  ]);
+});
