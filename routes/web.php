@@ -30,3 +30,7 @@ Route::group(['middleware' => 'cors'], function() {
       'hamburg' => 'HamburgController'
   ]);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

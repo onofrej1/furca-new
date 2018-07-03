@@ -12,9 +12,10 @@ class AppService
   public function createModels($source, $withController = true)
   {
     $yaml = Yaml::parseFile($source);
+    $relations = $data['relations'] ?? [];
 
     foreach($yaml as $data) {
-      $this->createModel($data['model'], $data['table']);
+      $this->createModel($data['model'], $data['table'], $relations);
       $this->createController($data['model']);
     }
   }
@@ -100,13 +101,17 @@ class AppService
     ], $output);
   }
 
-  public function createModel($class, $table)
+  public function createModel($class, $table, $relations)
   {
     $arr = array();
     preg_match("/(^.*)\\\(.*?)$/", $class, $arr);
 
     $dir = base_path('app');
     $output = $dir.'/'.$arr[2].'.php';
+
+    foreach($relations as $field => $prop) {
+
+    }
 
     $this->createFromTemplate('Model.tpl', [
       'class' => $arr[2],

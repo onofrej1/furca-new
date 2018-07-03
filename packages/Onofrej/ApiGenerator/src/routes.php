@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', 'Onofrej\ApiGenerator\Http\Controllers\AppController@test');
+//Route::get('/test', 'Onofrej\ApiGenerator\Http\Controllers\AppController@test');
 //Route::get('/flush', 'SiteController@flush');

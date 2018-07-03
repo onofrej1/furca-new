@@ -35,6 +35,10 @@ MenuItem:
         link:
             type: string
             nullable: true
+    relations:
+        menu:
+            type: belongsTo
+
 
 Article:
     model: App\Article
