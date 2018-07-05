@@ -27,7 +27,8 @@ Route::group(['middleware' => 'cors'], function() {
       'event' => 'EventController',
       'run' => 'RunController',
       'result' => 'ResultController',
-      'hamburg' => 'HamburgController'
+      'hamburg' => 'HamburgController',
+      'permission' => 'PermissionController'
   ]);
 });
 

@@ -73,11 +73,10 @@ class ResourceController extends Controller
     private function fillModel($model, $request)
     {
       $fields = $this->getFields();
+      $data = $request->all();
 
-      foreach ($fields as $field) {
-        if(in_array($field, $fields) && array_key_exists($field, $request->all())) {
-           $model->$field = $request->$field;
-        }
+      foreach ($data as $field => $value) {
+          is_array($value) ? $model->$field()->sync($value) : $model->$field = $value;
       }
     }
 
