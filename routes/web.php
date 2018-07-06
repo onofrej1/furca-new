@@ -35,3 +35,4 @@ Route::group(['middleware' => 'cors'], function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/hamburg/results/{event}', 'HamburgController@getResults')->name('csv');
