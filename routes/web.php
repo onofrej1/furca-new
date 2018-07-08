@@ -29,8 +29,12 @@ Route::group(['middleware' => 'cors'], function() {
       'result' => 'ResultController',
       'hamburg' => 'HamburgController',
       'permission' => 'PermissionController',
-      'news' => 'NewsController'
+      'news' => 'NewsController',
+      'guestbook' => 'GuestbookController'
   ]);
+
+  Route::get('/verify-captcha', 'HomeController@verifyCaptcha')->name('verifyCaptcha');
+
 });
 
 Auth::routes();
