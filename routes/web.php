@@ -34,6 +34,7 @@ Route::group(['middleware' => 'cors'], function() {
   ]);
 
   Route::get('/verify-captcha', 'HomeController@verifyCaptcha')->name('verifyCaptcha');
+  Route::match(['get', 'post'], '/files', 'FileController@getFiles')->name('verifyCaptcha');
 
 });
 

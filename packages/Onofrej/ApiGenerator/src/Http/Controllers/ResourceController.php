@@ -76,7 +76,8 @@ class ResourceController extends Controller
       $data = $request->all();
 
       foreach ($data as $field => $value) {
-          is_array($value) ? $model->$field()->sync($value) : $model->$field = $value;
+          $model->$field = $value;
+          //is_array($value) ? $model->$field()->sync($value) : $model->$field = $value;
       }
     }
 

@@ -45,4 +45,5 @@ class HomeController extends Controller
 
         return response()->json(['success' => $body->success]);
     }
+
 }
