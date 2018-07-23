@@ -35,10 +35,12 @@ Route::group(['middleware' => 'cors'], function() {
 
   Route::get('/verify-captcha', 'HomeController@verifyCaptcha')->name('verifyCaptcha');
   Route::match(['get', 'post'], '/files', 'FileController@getFiles')->name('verifyCaptcha');
+  Route::post('/upload', 'FileController@upload')->name('upload');
 
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/hamburg/results/{event}', 'HamburgController@getResults')->name('csv');

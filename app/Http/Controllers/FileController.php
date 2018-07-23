@@ -16,6 +16,17 @@ class FileController extends Controller
         //$this->middleware('auth');
     }
 
+    public function upload(Request $request)
+    {
+      $file = $request->file('uploadedFile');
+
+      $path = $request->get('path', 'obrazky');
+      $destinationPath = public_path($path);
+      $file->move($destinationPath,$file->getClientOriginalName());
+
+      return response()->json(['sucess' => true]);
+    }
+
     public function getFiles()
     {
       $path = request('path', 'obrazky');
